@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<alumnos>
+    <alumno id="A001">
+        <matricula>20230001</matricula>
+        <nombre>María García López</nombre>
+        <correo>maria.garcia@alumno.buap.mx</correo>
+        <carrera id="C001">Ingeniería en Computación</carrera>
+        <semestre>8</semestre>
+        <promedio>91.5</promedio>
+        <estatus>Activo</estatus>
+    </alumno>
+
+    <alumno id="A002">
+        <matricula>20230002</matricula>
+        <nombre>Carlos Hernández Ruiz</nombre>
+        <correo>carlos.hernandez@alumno.buap.mx</correo>
+        <carrera id="C001">Ingeniería en Computación</carrera>
+        <semestre>6</semestre>
+        <promedio>87.3</promedio>
+        <estatus>Activo</estatus>
+    </alumno>
+
+    <alumno id="A003">
+        <matricula>20230003</matricula>
+        <nombre>Laura Martínez Torres</nombre>
+        <correo>laura.martinez@alumno.buap.mx</correo>
+        <carrera id="C002">Ingeniería Tecnologías de la Información</carrera>
+        <semestre>4</semestre>
+        <promedio>94.2</promedio>
+        <estatus>Activo</estatus>
+    </alumno>
+
+    <alumno id="A004">
+        <matricula>20230004</matricula>
+        <nombre>Diego Sánchez Pérez</nombre>
+        <correo>diego.sanchez@alumno.buap.mx</correo>
+        <carrera id="C001">Ingeniería en Computación</carrera>
+        <semestre>8</semestre>
+        <promedio>78.6</promedio>
+        <estatus>Activo</estatus>
+    </alumno>
+
+    <alumno id="A005">
+        <matricula>20230005</matricula>
+        <nombre>Sofía Ramírez Flores</nombre>
+        <correo>sofia.ramirez@alumno.buap.mx</correo>
+        <carrera id="C003">Ingeniería en Ciencia de Datos</carrera>
+        <semestre>2</semestre>
+        <promedio>89.7</promedio>
+        <estatus>Activo</estatus>
+    </alumno>
+</alumnos>

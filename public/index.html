@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema Web Semántico de Gestión Académica">
+    <title>EduSemantic | Gestión Académica</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/app.js" defer></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">E</div>
+                <div>
+                    <h1>EduSemantic</h1>
+                    <p>Gestión académica</p>
+                </div>
+            </div>
+
+            <p class="menu-label">MENÚ PRINCIPAL</p>
+
+            <nav class="navigation">
+                <a class="nav-link active" href="#inicio">▦ <span>Dashboard</span></a>
+                <a class="nav-link" href="#alumnos">♙ <span>Alumnos</span></a>
+                <a class="nav-link" href="#profesores">♧ <span>Profesores</span></a>
+                <a class="nav-link" href="#carreras">⌂ <span>Carreras</span></a>
+                <a class="nav-link" href="#materias">▤ <span>Materias</span></a>
+                <a class="nav-link" href="#grupos">▥ <span>Grupos y horarios</span></a>
+                <a class="nav-link" href="#kardex">▧ <span>Kardex</span></a>
+                <a class="nav-link" href="#semantica">◎ <span>Web semántica</span></a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Sistema académico
+                <small>Versión 1.0</small>
+            </div>
+        </aside>
+
+        <main class="main-content" id="inicio">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">PLATAFORMA ACADÉMICA</p>
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="admin-profile">
+                    <div class="avatar">AD</div>
+                    <div>
+                        <strong>Administrador</strong>
+                        <small>Gestión del sistema</small>
+                    </div>
+                </div>
+            </header>
+
+            <section class="welcome">
+                <div>
+                    <p class="welcome-tag">PANEL DE CONTROL</p>
+                    <h2>Bienvenido a EduSemantic</h2>
+                    <p>Administra y explora la información académica de forma centralizada.</p>
+                </div>
+                <div class="welcome-symbol">ES</div>
+            </section>
+
+            <section class="stats-grid" aria-label="Resumen académico">
+                <article class="stat-card">
+                    <div class="stat-heading">
+                        <span>Total de alumnos</span>
+                        <span class="stat-icon blue">♙</span>
+                    </div>
+                    <p class="stat-value" id="total-alumnos">—</p>
+                    <small>Registros académicos</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-heading">
+                        <span>Promedio general</span>
+                        <span class="stat-icon green">↗</span>
+                    </div>
+                    <p class="stat-value" id="promedio-general">—</p>
+                    <small>Escala de 0 a 100</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-heading">
+                        <span>Carreras</span>
+                        <span class="stat-icon purple">⌂</span>
+                    </div>
+                    <p class="stat-value" id="total-carreras">—</p>
+                    <small>Carreras registradas</small>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-heading">
+                        <span>Alumnos activos</span>
+                        <span class="stat-icon orange">✓</span>
+                    </div>
+                    <p class="stat-value" id="alumnos-activos">—</p>
+                    <small>Con estatus activo</small>
+                </article>
+            </section>
+
+            <section class="panel" id="alumnos">
+                <div class="panel-header">
+                    <div>
+                        <h2>Directorio de alumnos</h2>
+                        <p>Información obtenida del documento XML.</p>
+                    </div>
+                    <input
+                        type="search"
+                        id="buscar-alumno"
+                        placeholder="Buscar alumno..."
+                        aria-label="Buscar alumno"
+                    >
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Alumno</th>
+                                <th>Carrera</th>
+                                <th>Semestre</th>
+                                <th>Promedio</th>
+                                <th>Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-alumnos">
+                            <tr>
+                                <td colspan="6">Cargando alumnos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="mensaje-tabla" class="table-message" aria-live="polite"></p>
+            </section>
+
+            <footer class="footer">
+                EduSemantic · Sistema Web Semántico de Gestión Académica
+            </footer>
+        </main>
+    </div>
+</body>
+</html>

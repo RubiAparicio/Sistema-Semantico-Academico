@@ -1,8 +1,12 @@
 const tablaAlumnos = document.getElementById("tabla-alumnos");
 const campoBusqueda = document.getElementById("buscar-alumno");
 const mensajeTabla = document.getElementById("mensaje-tabla");
+const modalAlumno = document.getElementById("modal-alumno");
+const formularioAlumno = document.getElementById("form-alumno");
+const mensajeFormulario = document.getElementById("mensaje-formulario");
 
 let alumnos = [];
+let alumnoEditandoId = null;
 
 function crearCelda(texto) {
     const celda = document.createElement("td");
@@ -46,11 +50,91 @@ function renderizarAlumnos(lista) {
         celdaEstatus.appendChild(etiqueta);
         fila.appendChild(celdaEstatus);
 
+        // Columna de acciones
+        const celdaAcciones = document.createElement("td");
+
+        const botonEditar = document.createElement("button");
+        botonEditar.textContent = "Editar";
+        botonEditar.type = "button";
+        botonEditar.className = "btn-editar";
+        botonEditar.addEventListener("click", () => {
+            editarAlumno(alumno);
+        });
+
+        const botonEliminar = document.createElement("button");
+        botonEliminar.textContent = "Eliminar";
+        botonEliminar.type = "button";
+        botonEliminar.className = "btn-eliminar";
+        botonEliminar.addEventListener("click", () => {
+            eliminarAlumno(alumno);
+        });
+
+        celdaAcciones.append(botonEditar, botonEliminar);
+        fila.appendChild(celdaAcciones);
+
         tablaAlumnos.appendChild(fila);
     }
 
     mensajeTabla.textContent =
         `Mostrando ${lista.length} de ${alumnos.length} alumnos.`;
+}
+
+function editarAlumno(alumno) {
+    alumnoEditandoId = alumno.id;
+
+    formularioAlumno.reset();
+    mensajeFormulario.textContent = "";
+
+    // Cambiar el título del formulario
+    modalAlumno.querySelector("h2").textContent = "Editar alumno";
+
+    // Cargar los datos actuales
+    formularioAlumno.elements.matricula.value = alumno.matricula;
+    formularioAlumno.elements.nombre.value = alumno.nombre;
+    formularioAlumno.elements.correo.value = alumno.correo;
+
+    formularioAlumno.elements.carrera.value =
+        typeof alumno.carrera === "string"
+            ? alumno.carrera
+            : alumno.carrera?._ ?? "";
+
+    formularioAlumno.elements.carreraId.value =
+        alumno.carrera?.$?.id ?? "";
+
+    formularioAlumno.elements.semestre.value = alumno.semestre;
+    formularioAlumno.elements.promedio.value = alumno.promedio;
+    formularioAlumno.elements.estatus.value = alumno.estatus;
+
+    modalAlumno.classList.remove("oculto");
+}
+
+async function eliminarAlumno(alumno) {
+    const confirmar = confirm(
+        `¿Seguro que deseas eliminar a ${alumno.nombre} (${alumno.matricula})? Esta acción no se puede deshacer.`
+    );
+
+    if (!confirmar) return;
+
+    try {
+        const respuesta = await fetch(
+            `/api/alumnos/${encodeURIComponent(alumno.id)}`,
+            { method: "DELETE" }
+        );
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(
+                resultado.error || "No se pudo eliminar al alumno."
+            );
+        }
+
+        alert(resultado.mensaje);
+        await iniciarDashboard();
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
 }
 
 function actualizarEstadisticas() {
@@ -136,6 +220,75 @@ async function iniciarDashboard() {
             "Comprueba que el servidor esté iniciado.";
     }
 }
+
+document.getElementById("btn-nuevo-alumno").addEventListener("click", () => {
+    alumnoEditandoId = null;
+    formularioAlumno.reset();
+    mensajeFormulario.textContent = "";
+    modalAlumno.querySelector("h2").textContent = "Registrar alumno";
+    modalAlumno.classList.remove("oculto");
+});
+
+document.getElementById("btn-cancelar-alumno").addEventListener("click", () => {
+    modalAlumno.classList.add("oculto");
+});
+
+formularioAlumno.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+
+    const botonGuardar = formularioAlumno.querySelector(
+        'button[type="submit"]'
+    );
+
+    botonGuardar.disabled = true;
+    mensajeFormulario.textContent = "Guardando alumno...";
+
+    const datos = Object.fromEntries(new FormData(formularioAlumno));
+
+    datos.semestre = Number(datos.semestre);
+    datos.promedio = Number(datos.promedio);
+
+    try {
+        const editando = alumnoEditandoId !== null;
+
+        const url = editando
+            ? `/api/alumnos/${encodeURIComponent(alumnoEditandoId)}`
+            : "/api/alumnos";
+
+        const respuesta = await fetch(url, {
+            method: editando ? "PUT" : "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(
+                resultado.error || "No se pudo guardar el alumno."
+            );
+        }
+
+        mensajeFormulario.textContent = resultado.mensaje;
+
+        await iniciarDashboard();
+
+        formularioAlumno.reset();
+        alumnoEditandoId = null;
+
+        setTimeout(() => {
+            modalAlumno.classList.add("oculto");
+            mensajeFormulario.textContent = "";
+            modalAlumno.querySelector("h2").textContent = "Registrar alumno";
+        }, 1000);
+    } catch (error) {
+        mensajeFormulario.textContent = error.message;
+    } finally {
+        botonGuardar.disabled = false;
+    }
+});
 
 campoBusqueda.addEventListener("input", filtrarAlumnos);
 

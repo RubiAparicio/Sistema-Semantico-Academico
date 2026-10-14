@@ -114,6 +114,9 @@
                         aria-label="Buscar alumno"
                     >
                 </div>
+                <button id="btn-nuevo-alumno" class="btn-primary">
+                    + Nuevo alumno
+                </button>
 
                 <div class="table-container">
                     <table>
@@ -125,6 +128,7 @@
                                 <th>Semestre</th>
                                 <th>Promedio</th>
                                 <th>Estatus</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tabla-alumnos">
@@ -137,6 +141,49 @@
 
                 <p id="mensaje-tabla" class="table-message" aria-live="polite"></p>
             </section>
+
+            <div id="modal-alumno" class="modal oculto">
+                <div class="modal-contenido">
+                    <h2>Registrar alumno</h2>
+
+                    <form id="form-alumno">
+                        <label for="matricula">Matrícula</label>
+                        <input id="matricula" name="matricula" required />
+
+                        <label for="nombre">Nombre completo</label>
+                        <input id="nombre" name="nombre" required />
+
+                        <label for="correo">Correo electrónico</label>
+                        <input id="correo" name="correo" type="email" required />
+
+                        <label for="carrera">Carrera</label>
+                        <input id="carrera" name="carrera" required />
+
+                        <label for="carreraId">ID de carrera</label>
+                        <input id="carreraId" name="carreraId" placeholder="Ej. C001" required />
+
+                        <label for="semestre">Semestre</label>
+                        <input id="semestre" name="semestre" type="number" min="1" max="12" required />
+
+                        <label for="promedio">Promedio</label>
+                        <input id="promedio" name="promedio" type="number" min="0" max="10" step="0.1" required />
+
+                        <label for="estatus">Estatus</label>
+                        <select id="estatus" name="estatus" required>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Egresado">Egresado</option>
+                        </select>
+
+                        <div class="acciones-formulario">
+                            <button type="submit" class="btn-primary">Guardar alumno</button>
+                            <button type="button" id="btn-cancelar-alumno">Cancelar</button>
+                        </div>
+
+                        <p id="mensaje-formulario" role="status"></p>
+                    </form>
+                </div>
+            </div>
 
             <footer class="footer">
                 EduSemantic · Sistema Web Semántico de Gestión Académica
